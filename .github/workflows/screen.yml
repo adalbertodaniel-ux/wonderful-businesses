@@ -1,0 +1,35 @@
+name: Buscar novas candidatas
+
+on:
+  workflow_dispatch: # botão "Run workflow" na aba Actions
+  schedule:
+    - cron: '23 12 1 * *' # todo dia 1º do mês, ~9h23 de Brasília
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-commits
+  cancel-in-progress: false
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Varrer S&P 500 + S&P 400 na Finnhub (~15–20 min)
+        env:
+          FINNHUB_KEY: ${{ secrets.FINNHUB_KEY }}
+        run: node scripts/screen.mjs
+      - name: Salvar no repositório
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/candidates.json
+          git diff --staged --quiet || git commit -m "Atualiza candidatas $(date -u +%Y-%m-%d)"
+          git pull --rebase
+          git push

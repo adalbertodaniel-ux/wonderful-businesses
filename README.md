@@ -12,6 +12,16 @@ Para cada empresa o painel mostra: preço ao vivo, valor intrínseco (owner earn
 - **Botão no GitHub:** aba **Actions → Atualizar cotações → Run workflow**.
 - **Botão no site ("↻ Atualizar agora"):** recarrega os dados mais recentes. Se você salvar sua chave da Finnhub no ⚙ do site, o botão busca os preços na hora, direto do seu navegador. A chave fica só no seu navegador.
 
+## Novas empresas: screener mensal
+
+A lista principal é curada (o moat é julgado por uma pessoa). Para encontrar novas empresas:
+
+- **Robô mensal:** todo dia 1º, o workflow **Buscar novas candidatas** varre o S&P 500 + S&P 400 (~900 empresas) na Finnhub e aplica os filtros numéricos: ROE e ROIC médios de 5 anos ≥ 15%, margem líquida média ≥ 15%, dívida/PL ≤ 1,5, lucro positivo e consistente, e exclusão de setores de commodity (energia, utilities, materiais, imobiliário, bancos, aéreas, montadoras). Leva ~20 minutos. Para rodar na hora: Actions → Buscar novas candidatas → Run workflow.
+- **Aba "Candidatas" no site:** mostra quem passou, já com valor intrínseco, preço-teto e score. O crescimento usado (g) é 70% do crescimento de LPA dos últimos 5 anos, limitado entre 3% e 10%.
+- **Aprovar:** clique em **Aprovar** na aba (copia o ticker e abre o GitHub) ou vá em Actions → Aprovar candidata → Run workflow → digite o ticker. A empresa entra na lista principal com o moat marcado como "A avaliar"; edite `data/stocks.json` para descrever o moat.
+
+Os limites dos filtros ficam no topo de `scripts/screen.mjs` (`CRITERIA`).
+
 ## Configuração (uma vez só)
 
 1. **Chave grátis da Finnhub:** crie em https://finnhub.io/register e copie a API key.
@@ -26,8 +36,13 @@ Para cada empresa o painel mostra: preço ao vivo, valor intrínseco (owner earn
 | `index.html` | O dashboard (HTML + JS, sem dependências) |
 | `data/stocks.json` | Lista de empresas, moat, crescimento assumido (g), P/L histórico e LPA base. Revise a cada trimestre |
 | `data/live.json` | Preços e indicadores ao vivo, gerado pelo Actions |
+| `data/candidates.json` | Empresas que passaram no screener mensal, gerado pelo Actions |
 | `scripts/update.mjs` | Script que busca os dados na Finnhub |
-| `.github/workflows/update.yml` | Agendamento e botão de atualização |
+| `scripts/screen.mjs` | Screener mensal (S&P 500 + S&P 400) |
+| `scripts/approve.mjs` | Move uma candidata para a lista principal |
+| `.github/workflows/update.yml` | Atualização diária de preços |
+| `.github/workflows/screen.yml` | Screener mensal |
+| `.github/workflows/approve.yml` | Botão de aprovação de candidata |
 
 ## Metodologia
 
