@@ -76,11 +76,22 @@ if (!universe.length) { console.error('Universo vazio, abortando.'); process.exi
 const { stocks } = JSON.parse(await readFile(new URL('../data/stocks.json', import.meta.url)));
 const inMain = new Set(stocks.map((s) => s.ticker));
 
-const seen = new Set();
+// Nome normalizado, para não contar duas classes de ação da mesma empresa (GOOG/GOOGL, FOX/FOXA, NWS/NWSA...)
+const norm = (n) => (n || '').toLowerCase()
+  .replace(/\(.*?\)/g, ' ').replace(/\bclass [a-z]\b|\bseries [a-z]\b/g, ' ')
+  .replace(/[.,'’&-]/g, ' ').replace(/\b(inc|corp|corporation|co|company|plc|ltd|holdings?|group|the)\b/g, ' ')
+  .replace(/\s+/g, ' ').trim();
+const mainNames = stocks.map((s) => norm(s.name)).filter(Boolean);
+const sameAsMain = (n) => mainNames.some((m) => n === m || n.startsWith(m + ' '));
+
+const seen = new Set(), seenNames = new Set();
 const toScan = universe.filter((u) => {
   u.ticker = u.ticker.replace('.', '-').trim(); // BRK.B -> BRK-B
   if (!u.ticker || seen.has(u.ticker) || inMain.has(u.ticker)) return false;
   seen.add(u.ticker);
+  const n = norm(u.name);
+  if (n && (seenNames.has(n) || sameAsMain(n))) return false; // outra classe da mesma empresa
+  seenNames.add(n);
   if (CRITERIA.excludedSectors.includes(u.sector)) return false;
   if (CRITERIA.excludedSubIndustry.test(u.subIndustry)) return false;
   return true;
@@ -115,6 +126,8 @@ for (const u of toScan) {
     const declines = epsSeries.slice(1).filter((v, i) => v < epsSeries[i]).length;
     const negEps = epsSeries.some((v) => v <= 0);
     const peSeries = last(sa.pe, 5).map((p) => p.v).filter((v) => v > 0 && v < 200);
+    const eps3 = last(sa.eps, 3).map((p) => p.v).filter((v) => v > 0);
+    const epsNorm = eps3.length === 3 ? avg(eps3) : null; // LPA médio dos 3 últimos anos fiscais
 
     const fails = [];
     if (roe5 == null || roe5 < CRITERIA.minRoe5y) fails.push('ROE');
@@ -130,7 +143,7 @@ for (const u of toScan) {
       candidates.push({
         ticker: u.ticker, name: p.name || u.name, sector: u.sector, subIndustry: u.subIndustry, index: u.index,
         founded: u.founded, ipoYear: p.ipo ? parseInt(p.ipo) : null, marketCapB: p.marketCapitalization ? p.marketCapitalization / 1000 : null,
-        price: q.c || null, pe: x.peTTM ?? null, peHist: peSeries.length >= 3 ? avg(peSeries) : null, eps,
+        price: q.c || null, pe: x.peTTM ?? null, peHist: peSeries.length >= 3 ? avg(peSeries) : null, eps, epsNorm,
         roe5, roic5, netMargin5: nm5, grossMargin5: x.grossMargin5Y ?? null, de,
         divYield: x.currentDividendYieldTTM ?? x.dividendYieldIndicatedAnnual ?? null,
         epsGrowth5: x.epsGrowth5Y ?? null, epsDeclines: declines, negativeEquity: de != null && de < 0,

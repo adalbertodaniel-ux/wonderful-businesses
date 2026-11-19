@@ -47,6 +47,7 @@
   .Barato{background:var(--cheap-bg);color:var(--cheap)}
   .Justo{background:var(--fair-bg);color:var(--fair)}
   .Caro{background:var(--exp-bg);color:var(--exp)}
+  .Revisar{background:var(--line);color:var(--muted)}
   .pos{color:var(--cheap)} .neg{color:var(--exp)}
   .bar{position:relative;height:8px;width:110px;background:var(--line);border-radius:4px;display:inline-block;vertical-align:middle}
   .bar i{position:absolute;top:-3px;width:2px;height:14px;background:var(--muted)}
@@ -332,13 +333,19 @@ const repoInfo = () => {
 function computeCand() {
   const a = base.assumptions, year = new Date().getFullYear();
   candRows = cand.candidates.filter((c) => c.price > 0 && c.eps > 0).map((c) => {
-    const g = gOf(c), vi = c.eps * multiple(g, a), pv = c.price / vi;
-    const dpl = c.peHist && c.pe > 0 ? c.pe / c.peHist - 1 : null;
+    // lucro dos últimos 12 meses muito abaixo da média de 3 anos = itens pontuais: usa o LPA médio
+    const depressed = c.epsNorm > 0 && c.eps < 0.6 * c.epsNorm;
+    const eps = depressed ? c.epsNorm : c.eps;
+    const pe = depressed ? c.price / eps : c.pe;
+    const g = gOf(c), vi = eps * multiple(g, a), pv = c.price / vi;
+    const dpl = c.peHist && pe > 0 ? pe / c.peHist - 1 : null;
     const parts = [pv - 1, dpl].filter((x) => x != null && isFinite(x));
     const score = parts.reduce((x, y) => x + y, 0) / parts.length;
-    const cls = score <= -0.15 ? 'Barato' : score <= 0.10 ? 'Justo' : 'Caro';
+    // P/L mais que o dobro do histórico ou preço 3x o valor intrínseco: número não confiável, revisar à mão
+    const distorted = (dpl != null && dpl > 1) || pv > 3;
+    const cls = distorted ? 'Revisar' : score <= -0.15 ? 'Barato' : score <= 0.10 ? 'Justo' : 'Caro';
     const since = c.founded || c.ipoYear;
-    return { ...c, g, vi, pv, dpl, score, cls, ceiling: vi * (1 - a.marginOfSafety), age: since ? year - since : null, ageLabel: c.founded ? 'fundada' : 'IPO' };
+    return { ...c, eps, pe, depressed, distorted, g, vi, pv, dpl, score: distorted ? 9 + score : score, rawScore: score, cls, ceiling: vi * (1 - a.marginOfSafety), age: since ? year - since : null, ageLabel: c.founded ? 'fundada' : 'IPO' };
   });
 }
 
@@ -352,7 +359,7 @@ function renderCand() {
   $('#candCount').textContent = candRows.length;
   const when = cand.updatedAt ? new Date(cand.updatedAt).toLocaleDateString('pt-BR') : null;
   $('#candInfo').innerHTML = when
-    ? `Varredura de <b>${when}</b>: <b>${cand.scanned}</b> empresas do S&P 500 + S&P 400 analisadas, <b>${candRows.length}</b> passaram nos filtros numéricos (ROE e ROIC médios ≥ 15%, margem líquida ≥ 15%, dívida/PL ≤ 1,5, lucro consistente, sem setores de commodity). <b>O moat ainda não foi avaliado</b>: estude antes de aprovar. Preços do dia da varredura.`
+    ? `Varredura de <b>${when}</b>: <b>${cand.scanned}</b> empresas do S&P 500 + S&P 400 analisadas, <b>${candRows.length}</b> passaram nos filtros numéricos (ROE e ROIC médios ≥ 15%, margem líquida ≥ 15%, dívida/PL ≤ 1,5, lucro consistente, sem setores de commodity). <b>O moat ainda não foi avaliado</b>: estude antes de aprovar. Preços do dia da varredura. Quando o lucro dos últimos 12 meses está mais de 40% abaixo da média de 3 anos, o cálculo usa a média; se ainda assim os números não fizerem sentido, a empresa vai para o fim como <b>Revisar</b>.`
     : `Nenhuma varredura ainda. No GitHub, vá em <b>Actions → Buscar novas candidatas → Run workflow</b> (leva ~20 min). Depois ela roda sozinha todo dia 1º.`;
   $('#candHead').innerHTML = candCols.map(([k, l, c]) => `<th class="${c || ''}" data-k="${k}">${l}${candSort === k ? (candDir > 0 ? ' ▲' : ' ▼') : ''}</th>`).join('');
   document.querySelectorAll('#candHead th').forEach((th) => th.onclick = () => {
@@ -366,12 +373,12 @@ function renderCand() {
   });
   const ri = repoInfo();
   $('#candBody').innerHTML = list.length ? list.map((r) => `<tr>
-    <td class="l"><span class="tk">${r.ticker}</span> <span class="nm">${r.index || ''}</span><br><span class="nm">${r.name} · ${r.subIndustry || r.sector}</span></td>
+    <td class="l"><span class="tk">${r.ticker}</span> <span class="nm">${r.index || ''}</span><br><span class="nm">${r.name} · ${r.subIndustry || r.sector}</span>${r.depressed ? '<br><span class="flag" title="Lucro dos últimos 12 meses mais de 40% abaixo da média de 3 anos">LPA normalizado (média 3 anos)</span>' : ''}</td>
     <td class="l"><span class="badge ${r.cls}">${r.cls}</span></td>
     <td>${usd(r.price)}</td><td>${usd(r.vi)}</td><td>${usd(r.ceiling)}</td>
     <td>${fmt(r.pv, 2, 'x')} ${bar(r.pv)}</td>
     <td class="${r.dpl < 0 ? 'pos' : r.dpl > 0 ? 'neg' : ''}">${pct(r.dpl)}</td>
-    <td class="${r.score < 0 ? 'pos' : 'neg'}"><b>${pct(r.score)}</b></td>
+    <td class="${r.distorted ? '' : r.rawScore < 0 ? 'pos' : 'neg'}" title="${r.distorted ? 'Lucro distorcido: confira os números' : ''}"><b>${r.distorted ? '—' : pct(r.rawScore)}</b></td>
     <td>${fmt(r.roe5, 0, '%')}${r.negativeEquity ? ' <span class="flag" title="Patrimônio negativo">⚑</span>' : ''}</td>
     <td>${fmt(r.roic5, 0, '%')}</td><td>${fmt(r.netMargin5, 1, '%')}</td><td>${fmt(r.de, 2)}</td>
     <td>${fmt(r.epsGrowth5, 1, '%')}</td><td>${r.divYield ? fmt(r.divYield, 2, '%') : '—'}</td>

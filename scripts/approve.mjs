@@ -19,14 +19,16 @@ for (const t of tickers) {
   if (base.stocks.some((s) => s.ticker === t)) { console.log(`${t} já está na lista.`); continue; }
   const c = cand.candidates.find((x) => x.ticker === t);
   if (!c) { console.error(`${t} não está entre as candidatas.`); process.exitCode = 1; continue; }
+  const depressed = c.epsNorm && c.eps < 0.6 * c.epsNorm;
+  const eps = depressed ? c.epsNorm : c.eps;
   base.stocks.push({
     ticker: c.ticker, name: c.name, sector: c.subIndustry || c.sector,
     founded: c.founded || c.ipoYear || new Date().getFullYear(), berkshire: false,
-    price: c.price, pe: c.pe, peHist: c.peHist ? Math.round(c.peHist * 10) / 10 : null,
+    price: c.price, pe: depressed ? Math.round(c.price / eps * 10) / 10 : c.pe, peHist: c.peHist ? Math.round(c.peHist * 10) / 10 : null,
     roe: c.roe5, roic: c.roic5, netMargin: c.netMargin5, de: c.de, divYield: c.divYield,
-    g: gOf(c), epsBase: c.eps, staticEps: false,
+    g: gOf(c), epsBase: Math.round(eps * 100) / 100, staticEps: depressed,
     moat: 'A avaliar: descreva aqui a vantagem competitiva durável.',
-    note: `Entrou pelo screener em ${today}.${c.founded ? '' : ' Ano de fundação = ano do IPO; confira.'}`,
+    note: `Entrou pelo screener em ${today}.${depressed ? ' Lucro dos últimos 12 meses deprimido por itens pontuais: usa o LPA médio de 3 anos (fixo).' : ''}${c.founded ? '' : ' Ano de fundação = ano do IPO; confira.'}`,
   });
   cand.candidates = cand.candidates.filter((x) => x.ticker !== t);
   console.log(`${t} adicionada à lista principal.`);
