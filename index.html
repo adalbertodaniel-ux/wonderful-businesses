@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wonderful Businesses at Fair Prices</title>
+<style>
+  :root{
+    --bg:#f7f6f2;--card:#fff;--ink:#1d1f23;--muted:#6b6f76;--line:#e4e2dc;
+    --cheap:#1f7a4d;--cheap-bg:#e3f2ea;--fair:#8a6a12;--fair-bg:#f6efd9;--exp:#b03a2e;--exp-bg:#f8e4e1;
+    --accent:#1d3b6e;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --bg:#131418;--card:#1c1e23;--ink:#e9e9ec;--muted:#9a9ea6;--line:#2c2f36;
+    --cheap:#5fc391;--cheap-bg:#1b3328;--fair:#e0bd5a;--fair-bg:#38301a;--exp:#ef8a7e;--exp-bg:#3d221f;--accent:#8fb1ee;
+  }}
+  *{box-sizing:border-box}
+  body{margin:0;font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+  .wrap{max-width:1280px;margin:0 auto;padding:28px 20px 60px}
+  header{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;margin-bottom:22px}
+  h1{font-family:Georgia,"Times New Roman",serif;font-weight:600;font-size:30px;margin:0 0 4px;letter-spacing:-.01em}
+  .sub{color:var(--muted);margin:0}
+  .actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:9px 14px;border-radius:8px;cursor:pointer}
+  button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  @media (prefers-color-scheme:dark){button.primary{color:#0d1424}}
+  button:disabled{opacity:.6;cursor:wait}
+  .status{font-size:13px;color:var(--muted)}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:18px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .kpi .v{font-size:26px;font-weight:650;font-variant-numeric:tabular-nums}
+  .kpi .l{font-size:13px;color:var(--muted)}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+  .chip{padding:6px 12px;border-radius:999px;font-size:13px}
+  .chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  input[type=search],input[type=text]{font:inherit;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+  .tablewrap{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:auto}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;min-width:1100px}
+  th,td{padding:10px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:600;cursor:pointer;user-select:none;position:sticky;top:0;background:var(--card)}
+  th.l,td.l{text-align:left}
+  tbody tr.main{cursor:pointer}
+  tbody tr.main:hover{background:color-mix(in srgb,var(--accent) 6%,transparent)}
+  .tk{font-weight:700}
+  .nm{color:var(--muted);font-size:13px}
+  .badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600}
+  .Barato{background:var(--cheap-bg);color:var(--cheap)}
+  .Justo{background:var(--fair-bg);color:var(--fair)}
+  .Caro{background:var(--exp-bg);color:var(--exp)}
+  .pos{color:var(--cheap)} .neg{color:var(--exp)}
+  .bar{position:relative;height:8px;width:110px;background:var(--line);border-radius:4px;display:inline-block;vertical-align:middle}
+  .bar i{position:absolute;top:-3px;width:2px;height:14px;background:var(--muted)}
+  .bar b{position:absolute;top:0;height:8px;border-radius:4px}
+  .brk{font-size:11px;color:var(--accent);font-weight:700;margin-left:4px}
+  tr.detail td{background:color-mix(in srgb,var(--accent) 4%,transparent);text-align:left;white-space:normal;color:var(--ink)}
+  .dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;font-size:14px}
+  .dgrid h4{margin:0 0 4px;font-size:12px;text-transform:uppercase;color:var(--muted);letter-spacing:.04em}
+  .dgrid p{margin:0}
+  .flag{color:var(--exp);font-size:12px}
+  section.principles{margin-top:34px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px}
+  .box h3{font-family:Georgia,serif;margin:0 0 10px;font-size:19px}
+  .box ul{margin:0;padding-left:18px}
+  .box li{margin:4px 0}
+  .settings{display:none;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:16px}
+  .settings.open{display:block}
+  .settings .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .settings input{flex:1;min-width:260px}
+  footer{margin-top:30px;font-size:13px;color:var(--muted)}
+  .live{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px;background:var(--muted)}
+  .live.on{background:var(--cheap)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Wonderful Businesses at Fair Prices</h1>
+      <p class="sub">Ações americanas filtradas pelos critérios de <em>O Tao de Warren Buffett</em> e <em>O Tao de Charlie Munger</em>, ordenadas do preço mais justo ao menos justo.</p>
+    </div>
+    <div class="actions">
+      <span class="status" id="status"><span class="live" id="liveDot"></span>carregando…</span>
+      <button class="primary" id="refresh">↻ Atualizar agora</button>
+      <button id="toggleSettings" title="Configurar chave da Finnhub">⚙</button>
+    </div>
+  </header>
+
+  <div class="settings" id="settings">
+    <strong>Chave da Finnhub (opcional)</strong>
+    <div class="status">Com a chave salva, o botão "Atualizar agora" busca os preços direto da Finnhub neste navegador. A chave fica só no seu navegador (localStorage), não vai para o GitHub. Sem chave, o botão recarrega os dados que o GitHub Actions atualiza todo dia útil.</div>
+    <div class="row">
+      <input type="text" id="keyInput" placeholder="cole sua chave grátis de finnhub.io">
+      <button id="saveKey">Salvar</button>
+      <button id="clearKey">Apagar</button>
+    </div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="filters">
+    <button class="chip on" data-f="all">Todas</button>
+    <button class="chip" data-f="Barato">Baratas</button>
+    <button class="chip" data-f="Justo">Justas</button>
+    <button class="chip" data-f="Caro">Caras</button>
+    <button class="chip" data-f="brk">Só carteira Berkshire</button>
+    <input type="search" id="q" placeholder="Buscar ticker ou setor">
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr id="thead"></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <section class="principles">
+    <div class="box">
+      <h3>Os filtros de qualidade</h3>
+      <ul>
+        <li><b>Vantagem durável (moat)</b> e negócio simples de entender</li>
+        <li><b>ROE ≥ 15%</b> de forma consistente; prefira ROIC ≥ 15% (recompras inflam o ROE)</li>
+        <li><b>Margens altas e estáveis</b>: líquida ≥ 15%, bruta &gt; 40%</li>
+        <li><b>Pouco capital</b>: capex &lt; 25–50% do lucro</li>
+        <li><b>Pouca dívida</b>: D/E &lt; 0,8 ou dívida ≤ 3–4 anos de lucro</li>
+        <li><b>Lucros previsíveis</b> e longevidade; evitar commodities (aéreas, petróleo, siderurgia)</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>Como o preço é julgado</h3>
+      <ul>
+        <li><b>Método A, múltiplo:</b> P/L atual ÷ P/L médio de 5–10 anos da própria empresa − 1</li>
+        <li><b>Método B, valor intrínseco:</b> owner earnings por ação (proxy: LPA) × múltiplo de um DCF de 2 estágios (g por 10 anos, 3% na perpetuidade, desconto de 9%)</li>
+        <li><b>Preço-teto:</b> 75% do valor intrínseco (margem de segurança de 25%)</li>
+        <li><b>Score</b> = média de (Preço/VI − 1) e Método A. Barato ≤ −15%, Justo até +10%, Caro acima</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>A ideia central</h3>
+      <ul>
+        <li>Buffett (carta de 1989): melhor uma empresa maravilhosa a preço justo do que uma empresa razoável a preço maravilhoso</li>
+        <li>Munger: lucros previsíveis tornam a ação um "título" cujo cupom cresce; o rendimento de lucro (LPA/preço) é a taxa desse título</li>
+        <li>As baratas quase sempre vêm com uma "história ruim". O trabalho é julgar se o problema é temporário ou se o moat está erodindo</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer id="footer">
+    Modelo educacional, não é recomendação de investimento. O valor intrínseco é muito sensível ao crescimento (g): trate-o como faixa, não como número exato. Dados de qualidade e médias históricas revisados em <span id="asof"></span>; preço e indicadores ao vivo via Finnhub.
+  </footer>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const KEY_STORE = 'finnhubKey';
+let base, live = { updatedAt: null, quotes: {} }, rows = [];
+let sortKey = 'score', sortDir = 1, filter = 'all', query = '', open = new Set();
+
+const multiple = (g, a) => {
+  const r = 1 + a.discountRate; let s = 0;
+  for (let t = 1; t <= a.years; t++) s += Math.pow(1 + g, t) / Math.pow(r, t);
+  return s + Math.pow(1 + g, a.years) * (1 + a.terminalGrowth) / (a.discountRate - a.terminalGrowth) / Math.pow(r, a.years);
+};
+const fmt = (v, d = 1, suf = '') => (v == null || !isFinite(v)) ? '—' : v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d }) + suf;
+const usd = (v) => (v == null || !isFinite(v)) ? '—' : 'US$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const pct = (v) => (v == null || !isFinite(v)) ? '—' : (v > 0 ? '+' : '') + fmt(v * 100, 0, '%');
+const pick = (a, b) => (a != null && isFinite(a) ? a : b);
+
+function compute() {
+  const a = base.assumptions, year = new Date().getFullYear();
+  rows = base.stocks.map((s) => {
+    const q = live.quotes[s.ticker] || {};
+    const price = pick(q.price, s.price);
+    const liveEps = q.eps > 0 ? q.eps : null;
+    const eps = s.staticEps ? s.epsBase : pick(liveEps, s.epsBase);
+    const pe = s.staticEps ? s.pe * price / s.price : pick(q.pe > 0 ? q.pe : null, s.pe); // P/L ajustado acompanha o preço
+    const vi = eps * multiple(s.g, a);
+    const pv = price / vi;
+    const dpl = s.peHist ? pe / s.peHist - 1 : null;
+    const parts = [pv - 1, dpl].filter((x) => x != null && isFinite(x));
+    const score = parts.reduce((x, y) => x + y, 0) / parts.length;
+    const cls = score <= -0.15 ? 'Barato' : score <= 0.10 ? 'Justo' : 'Caro';
+    return {
+      ...s, price, changePct: q.changePct, pe, eps, vi, pv, dpl, score, cls,
+      ceiling: vi * (1 - a.marginOfSafety), age: year - s.founded,
+      roe: pick(q.roe, s.roe), roic: pick(q.roic, s.roic), netMargin: pick(q.netMargin, s.netMargin),
+      divYield: pick(q.divYield, s.divYield), de: pick(q.de, s.de), ey: eps / price,
+      high52: q.high52, low52: q.low52, isLive: q.price != null,
+    };
+  });
+}
+
+const cols = [
+  ['rank', '#', 'l'], ['ticker', 'Empresa', 'l'], ['cls', 'Classe', 'l'], ['price', 'Preço'], ['vi', 'Valor intr.'],
+  ['ceiling', 'Teto (MS 25%)'], ['pv', 'Preço / VI'], ['dpl', 'P/L vs hist.'], ['score', 'Score'], ['pe', 'P/L'],
+  ['roe', 'ROE'], ['roic', 'ROIC'], ['netMargin', 'Marg. líq.'], ['de', 'Dív/PL'], ['divYield', 'Div. yield'], ['age', 'Idade'],
+];
+
+function renderHead() {
+  $('#thead').innerHTML = cols.map(([k, l, c]) =>
+    `<th class="${c || ''}" data-k="${k}">${l}${sortKey === k ? (sortDir > 0 ? ' ▲' : ' ▼') : ''}</th>`).join('');
+  document.querySelectorAll('th').forEach((th) => th.onclick = () => {
+    const k = th.dataset.k === 'rank' ? 'score' : th.dataset.k;
+    sortDir = sortKey === k ? -sortDir : 1; sortKey = k; render();
+  });
+}
+
+function bar(pv) {
+  // escala de 0,5x a 2,0x; marcador no 1,0x
+  const x = (v) => Math.max(0, Math.min(1, (v - 0.5) / 1.5)) * 100;
+  const color = pv <= 0.85 ? 'var(--cheap)' : pv <= 1.1 ? 'var(--fair)' : 'var(--exp)';
+  const a = Math.min(x(pv), x(1)), b = Math.max(x(pv), x(1));
+  return `<span class="bar"><b style="left:${a}%;width:${Math.max(b - a, 2)}%;background:${color}"></b><i style="left:${x(1)}%"></i></span>`;
+}
+
+function render() {
+  renderHead();
+  const ranked = [...rows].sort((a, b) => a.score - b.score);
+  ranked.forEach((r, i) => r.rank = i + 1);
+  let list = rows.filter((r) =>
+    (filter === 'all' || (filter === 'brk' ? r.berkshire : r.cls === filter)) &&
+    (!query || (r.ticker + ' ' + r.name + ' ' + r.sector).toLowerCase().includes(query)));
+  list.sort((a, b) => {
+    const va = a[sortKey], vb = b[sortKey];
+    if (typeof va === 'string') return va.localeCompare(vb) * sortDir;
+    return ((va ?? Infinity) - (vb ?? Infinity)) * sortDir;
+  });
+  const roeFlag = (r) => r.roe == null ? '' : r.roe > 100 ? ' <span class="flag" title="Patrimônio encolhido por recompras">⚑</span>' : '';
+  $('#tbody').innerHTML = list.map((r) => {
+    const chg = r.changePct != null ? `<span class="${r.changePct >= 0 ? 'pos' : 'neg'}" style="font-size:12px"> ${r.changePct >= 0 ? '+' : ''}${fmt(r.changePct, 2)}%</span>` : '';
+    const main = `<tr class="main" data-t="${r.ticker}">
+      <td class="l">${r.rank}</td>
+      <td class="l"><span class="tk">${r.ticker}</span>${r.berkshire ? '<span class="brk" title="Na carteira da Berkshire">BRK</span>' : ''}<br><span class="nm">${r.name}</span></td>
+      <td class="l"><span class="badge ${r.cls}">${r.cls}</span></td>
+      <td>${usd(r.price)}${chg}</td>
+      <td>${usd(r.vi)}</td>
+      <td>${usd(r.ceiling)}</td>
+      <td>${fmt(r.pv, 2, 'x')} ${bar(r.pv)}</td>
+      <td class="${r.dpl < 0 ? 'pos' : r.dpl > 0 ? 'neg' : ''}">${pct(r.dpl)}</td>
+      <td class="${r.score < 0 ? 'pos' : 'neg'}"><b>${pct(r.score)}</b></td>
+      <td>${fmt(r.pe, 1)}</td>
+      <td>${r.roe == null ? '—' : fmt(r.roe, 0, '%')}${roeFlag(r)}</td>
+      <td>${r.roic == null ? '—' : fmt(r.roic, 0, '%')}</td>
+      <td>${fmt(r.netMargin, 1, '%')}</td>
+      <td>${fmt(r.de, 2)}</td>
+      <td>${r.divYield ? fmt(r.divYield, 2, '%') : '—'}</td>
+      <td>${r.age} anos</td></tr>`;
+    const det = open.has(r.ticker) ? `<tr class="detail"><td colspan="${cols.length}"><div class="dgrid">
+      <div><h4>Moat</h4><p>${r.moat}</p></div>
+      <div><h4>Atenção</h4><p>${r.note}</p></div>
+      <div><h4>Números do modelo</h4><p>Setor: ${r.sector} · fundada em ${r.founded}<br>
+        LPA base: ${usd(r.eps)}${r.staticEps ? ' (ajustado, fixo)' : ''} · g: ${fmt(r.g * 100, 0, '%')} a.a. · múltiplo justo: ${fmt(multiple(r.g, base.assumptions), 1, 'x')}<br>
+        Rendimento de lucro ("equity bond"): ${fmt(r.ey * 100, 1, '%')} · P/L médio hist.: ${fmt(r.peHist, 1)}<br>
+        ${r.low52 ? `Faixa 52 semanas: ${usd(r.low52)} – ${usd(r.high52)}` : ''}</p></div>
+      </div></td></tr>` : '';
+    return main + det;
+  }).join('');
+  document.querySelectorAll('tr.main').forEach((tr) => tr.onclick = () => {
+    const t = tr.dataset.t; open.has(t) ? open.delete(t) : open.add(t); render();
+  });
+
+  const c = (k) => rows.filter((r) => r.cls === k).length;
+  const best = ranked[0];
+  $('#kpis').innerHTML = `
+    <div class="kpi"><div class="v">${rows.length}</div><div class="l">empresas que passam no filtro de qualidade</div></div>
+    <div class="kpi"><div class="v" style="color:var(--cheap)">${c('Barato')}</div><div class="l">baratas (score ≤ −15%)</div></div>
+    <div class="kpi"><div class="v" style="color:var(--fair)">${c('Justo')}</div><div class="l">a preço justo</div></div>
+    <div class="kpi"><div class="v" style="color:var(--exp)">${c('Caro')}</div><div class="l">caras</div></div>
+    <div class="kpi"><div class="v">${best.ticker}</div><div class="l">preço mais justo agora (${fmt(best.pv, 2, 'x')} do VI)</div></div>`;
+}
+
+function setStatus() {
+  const n = Object.keys(live.quotes).length;
+  $('#liveDot').className = 'live' + (n ? ' on' : '');
+  $('#status').lastChild.textContent = n && live.updatedAt
+    ? `preços de ${new Date(live.updatedAt).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })}`
+    : `preços de referência de ${new Date(base.asOf + 'T12:00').toLocaleDateString('pt-BR')}`;
+}
+
+async function fetchLiveFromFinnhub(key) {
+  const quotes = {};
+  for (const s of base.stocks) {
+    const get = (p) => fetch(`https://finnhub.io/api/v1/${p}&token=${encodeURIComponent(key)}`).then((r) => {
+      if (!r.ok) throw new Error(r.status); return r.json();
+    });
+    const [q, m] = await Promise.all([get(`quote?symbol=${s.ticker}`), get(`stock/metric?symbol=${s.ticker}&metric=all`)]);
+    const x = m.metric || {};
+    quotes[s.ticker] = {
+      price: q.c || null, changePct: q.dp ?? null,
+      pe: x.peTTM ?? x.peBasicExclExtraTTM ?? null, eps: x.epsTTM ?? x.epsBasicExclExtraItemsTTM ?? null,
+      roe: x.roeTTM ?? null, roic: x.roiTTM ?? null, netMargin: x.netProfitMarginTTM ?? null,
+      divYield: x.currentDividendYieldTTM ?? x.dividendYieldIndicatedAnnual ?? null,
+      de: x['totalDebt/totalEquityQuarterly'] ?? x['totalDebt/totalEquityAnnual'] ?? null,
+      high52: x['52WeekHigh'] ?? null, low52: x['52WeekLow'] ?? null,
+    };
+    $('#status').lastChild.textContent = `buscando ${s.ticker}…`;
+  }
+  return { updatedAt: new Date().toISOString(), quotes };
+}
+
+async function loadLiveFile() {
+  try { live = await fetch('data/live.json?t=' + Date.now()).then((r) => r.json()); } catch { /* sem arquivo ainda */ }
+}
+
+async function refresh() {
+  const btn = $('#refresh'); btn.disabled = true;
+  const key = localStorage.getItem(KEY_STORE);
+  try {
+    if (key) live = await fetchLiveFromFinnhub(key);
+    else await loadLiveFile();
+  } catch (e) {
+    alert('Não consegui buscar na Finnhub (' + e.message + '). Confira a chave em ⚙. Usando os últimos dados salvos.');
+    await loadLiveFile();
+  }
+  compute(); render(); setStatus(); btn.disabled = false;
+}
+
+(async () => {
+  base = await fetch('data/stocks.json?t=' + Date.now()).then((r) => r.json());
+  $('#asof').textContent = new Date(base.asOf + 'T12:00').toLocaleDateString('pt-BR');
+  await loadLiveFile();
+  compute(); render(); setStatus();
+})();
+
+$('#refresh').onclick = refresh;
+$('#toggleSettings').onclick = () => {
+  $('#settings').classList.toggle('open');
+  $('#keyInput').value = localStorage.getItem(KEY_STORE) || '';
+};
+$('#saveKey').onclick = () => { const v = $('#keyInput').value.trim(); if (v) localStorage.setItem(KEY_STORE, v); $('#settings').classList.remove('open'); refresh(); };
+$('#clearKey').onclick = () => { localStorage.removeItem(KEY_STORE); $('#keyInput').value = ''; };
+document.querySelectorAll('.chip').forEach((b) => b.onclick = () => {
+  document.querySelectorAll('.chip').forEach((x) => x.classList.remove('on')); b.classList.add('on'); filter = b.dataset.f; render();
+});
+$('#q').oninput = (e) => { query = e.target.value.toLowerCase(); render(); };
+</script>
+</body>
+</html>
