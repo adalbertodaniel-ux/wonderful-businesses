@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T15:20:56.127Z",
+  "updatedAt": "2026-11-24T15:22:57.418Z",
   "source": "Fundamentus",
   "quotes": {
     "WEGE3": {
@@ -12,7 +12,7 @@
       "netMargin": 16.43,
       "divYield": 4.01,
       "de": -0.13,
-      "revGrowth5": null
+      "revGrowth5": 10.25
     },
     "ITUB4": {
       "price": 39.73,
@@ -24,7 +24,7 @@
       "netMargin": 0,
       "divYield": 7.84,
       "de": 0,
-      "revGrowth5": null
+      "revGrowth5": 3.59
     },
     "BPAC11": {
       "price": 49.76,
@@ -36,7 +36,7 @@
       "netMargin": 0,
       "divYield": 2.84,
       "de": 0,
-      "revGrowth5": null
+      "revGrowth5": 4.4
     },
     "B3SA3": {
       "price": 14.16,
@@ -48,7 +48,7 @@
       "netMargin": 46.4,
       "divYield": 6.49,
       "de": -0.15,
-      "revGrowth5": null
+      "revGrowth5": 4.58
     },
     "TOTS3": {
       "price": 31.08,
@@ -60,7 +60,7 @@
       "netMargin": 20.89,
       "divYield": 2.26,
       "de": 0.62,
-      "revGrowth5": null
+      "revGrowth5": 16.32
     },
     "RADL3": {
       "price": 14.69,
@@ -72,7 +72,7 @@
       "netMargin": 2.84,
       "divYield": 3.07,
       "de": 0.38,
-      "revGrowth5": null
+      "revGrowth5": 13.05
     },
     "ABEV3": {
       "price": 15.94,
@@ -84,7 +84,7 @@
       "netMargin": 18.26,
       "divYield": 5.4,
       "de": -0.21,
-      "revGrowth5": null
+      "revGrowth5": 3.37
     },
     "PSSA3": {
       "price": 42.91,
@@ -96,7 +96,7 @@
       "netMargin": 8.57,
       "divYield": 6.99,
       "de": -0.97,
-      "revGrowth5": null
+      "revGrowth5": 13.02
     },
     "VIVA3": {
       "price": 15.85,
@@ -108,7 +108,7 @@
       "netMargin": 16.21,
       "divYield": 4.4,
       "de": 0.03,
-      "revGrowth5": null
+      "revGrowth5": 15.12
     },
     "LREN3": {
       "price": 9.21,
@@ -120,7 +120,7 @@
       "netMargin": 9.17,
       "divYield": 9.99,
       "de": -0.11,
-      "revGrowth5": null
+      "revGrowth5": 5.54
     },
     "GRND3": {
       "price": 3.65,
@@ -132,7 +132,7 @@
       "netMargin": 22.21,
       "divYield": 40.47,
       "de": -0.03,
-      "revGrowth5": null
+      "revGrowth5": 1.14
     },
     "LEVE3": {
       "price": 30.57,
@@ -144,7 +144,7 @@
       "netMargin": 12.53,
       "divYield": 9.84,
       "de": 0.79,
-      "revGrowth5": null
+      "revGrowth5": 7.72
     }
   }
 }
