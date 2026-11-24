@@ -1,1 +1,150 @@
-{"updatedAt":null,"quotes":{}}
+{
+  "updatedAt": "2026-11-24T15:09:06.117Z",
+  "source": "Fundamentus",
+  "quotes": {
+    "WEGE3": {
+      "price": 49.91,
+      "changePct": null,
+      "pe": 33.42,
+      "eps": 1.4934171154997007,
+      "roe": 31.41,
+      "roic": 23.45,
+      "netMargin": 16.43,
+      "divYield": 4.01,
+      "de": 19956800000,
+      "revGrowth5": 10.25
+    },
+    "ITUB4": {
+      "price": 39.73,
+      "changePct": null,
+      "pe": 9.37,
+      "eps": 4.240128068303095,
+      "roe": 21.37,
+      "roic": 0,
+      "netMargin": 0,
+      "divYield": 7.84,
+      "de": 218927000000,
+      "revGrowth5": 3.59
+    },
+    "BPAC11": {
+      "price": 49.76,
+      "changePct": null,
+      "pe": 10.21,
+      "eps": 4.8736532810969635,
+      "roe": 23.21,
+      "roic": 0,
+      "netMargin": 0,
+      "divYield": 2.84,
+      "de": 81659300000,
+      "revGrowth5": 4.4
+    },
+    "B3SA3": {
+      "price": 14.16,
+      "changePct": null,
+      "pe": 12.51,
+      "eps": 1.13189448441247,
+      "roe": 30.24,
+      "roic": 22.5,
+      "netMargin": 46.4,
+      "divYield": 6.49,
+      "de": 18880200000,
+      "revGrowth5": 4.58
+    },
+    "TOTS3": {
+      "price": 31.08,
+      "changePct": null,
+      "pe": 12.68,
+      "eps": 2.451104100946372,
+      "roe": 26.73,
+      "roic": 24.42,
+      "netMargin": 20.89,
+      "divYield": 2.26,
+      "de": 5312710000,
+      "revGrowth5": 16.32
+    },
+    "RADL3": {
+      "price": 14.69,
+      "changePct": null,
+      "pe": 19.85,
+      "eps": 0.740050377833753,
+      "roe": 17.17,
+      "roic": 16.47,
+      "netMargin": 2.84,
+      "divYield": 3.07,
+      "de": 7551490000,
+      "revGrowth5": 13.05
+    },
+    "ABEV3": {
+      "price": 15.94,
+      "changePct": null,
+      "pe": 15.67,
+      "eps": 1.017230376515635,
+      "roe": 17.32,
+      "roic": 20.74,
+      "netMargin": 18.26,
+      "divYield": 5.4,
+      "de": 90895700000,
+      "revGrowth5": 3.37
+    },
+    "PSSA3": {
+      "price": 42.91,
+      "changePct": null,
+      "pe": 7.52,
+      "eps": 5.7061170212765955,
+      "roe": 22.09,
+      "roic": 78.82,
+      "netMargin": 8.57,
+      "divYield": 6.99,
+      "de": 16710500000,
+      "revGrowth5": 13.02
+    },
+    "VIVA3": {
+      "price": 15.85,
+      "changePct": null,
+      "pe": 7.25,
+      "eps": 2.1862068965517243,
+      "roe": 15.71,
+      "roic": 15.47,
+      "netMargin": 16.21,
+      "divYield": 4.4,
+      "de": 3287220000,
+      "revGrowth5": 15.12
+    },
+    "LREN3": {
+      "price": 9.21,
+      "changePct": null,
+      "pe": 6.35,
+      "eps": 1.4503937007874017,
+      "roe": 14.31,
+      "roic": 23.79,
+      "netMargin": 9.17,
+      "divYield": 9.99,
+      "de": 10212900000,
+      "revGrowth5": 5.54
+    },
+    "GRND3": {
+      "price": 3.65,
+      "changePct": null,
+      "pe": 5.85,
+      "eps": 0.6239316239316239,
+      "roe": 17.1,
+      "roic": 7.87,
+      "netMargin": 22.21,
+      "divYield": 40.47,
+      "de": 3291380000,
+      "revGrowth5": 1.14
+    },
+    "LEVE3": {
+      "price": 30.57,
+      "changePct": null,
+      "pe": 6.21,
+      "eps": 4.9227053140096615,
+      "roe": 59.93,
+      "roic": 34.46,
+      "netMargin": 12.53,
+      "divYield": 9.84,
+      "de": 1113500000,
+      "revGrowth5": 7.72
+    }
+  }
+}
