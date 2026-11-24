@@ -1,1 +1,37 @@
-{"updatedAt":null,"universeSize":0,"scanned":0,"candidates":[]}
+{
+  "updatedAt": "2026-11-24T15:10:22.048Z",
+  "universeSize": 992,
+  "scanned": 178,
+  "criteria": {
+    "minLiq2m": 2000000,
+    "minRoe": 20,
+    "minRoic": 15,
+    "minNetMargin": 10,
+    "maxDebtEquity": 1,
+    "minRevGrowth5": 5,
+    "maxPe": 60,
+    "stateControlled": [
+      "PETR",
+      "BBAS",
+      "BBSE",
+      "CXSE",
+      "SAPR",
+      "CSMG",
+      "CMIG",
+      "BRSR",
+      "BNBR",
+      "BAZA",
+      "BEES",
+      "BGIP",
+      "CEEB",
+      "CEBR",
+      "CLSC",
+      "EMAE",
+      "BMEB",
+      "BSLI",
+      "BPAR"
+    ],
+    "excludedSectors": "petr[óo]leo|g[áa]s|minera|siderurgia|metalurgia|papel|celulose|qu[íi]mic|energia el[ée]trica|saneamento|explora[çc][ãa]o de im[óo]veis|constru[çc][ãa]o civil|incorpora|agropecu|agricultura|a[çc][úu]car|carnes|transporte a[ée]reo|autom[óo]veis|intermedi[áa]rios financeiros|bancos|securitizadora|holdings"
+  },
+  "candidates": []
+}
