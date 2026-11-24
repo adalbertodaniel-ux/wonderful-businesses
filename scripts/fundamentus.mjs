@@ -23,10 +23,10 @@ export function num(s) {
 }
 
 // Posição de cada coluna caso o cabeçalho mude de texto
-const FALLBACK = { papel: 0, cotacao: 1, pl: 2, pvp: 3, dy: 5, mrgEbit: 12, mrgLiq: 13, roic: 15, roe: 16, liq2m: 17, patrim: 18, divBrutPat: 19, crescRec5a: 20 };
+const FALLBACK = { papel: 0, cotacao: 1, pl: 2, pvp: 3, dy: 5, mrgEbit: 13, mrgLiq: 14, roic: 16, roe: 17, liq2m: 18, patrim: 19, divBrutPat: 20, crescRec5a: 21 };
 const HEADERS = {
   papel: /papel/, cotacao: /cota/, pl: /^p\/l$/, pvp: /^p\/vp$/, dy: /div/, mrgEbit: /mrg\s*ebit/, mrgLiq: /mrg.*l[ií]q/,
-  roic: /^roic$/, roe: /^roe$/, liq2m: /liq.*2/, patrim: /patrim.*l[ií]q/, divBrutPat: /d[ií]v.*brut/, crescRec5a: /cresc/,
+  roic: /^roic$/, roe: /^roe$/, liq2m: /liq.*2/, patrim: /patrim.*l[ií]q/, divBrutPat: /d[ií]v.*patrim/, // hoje é dívida LÍQUIDA / patrimônio crescRec5a: /cresc/,
 };
 
 export async function resultado() {

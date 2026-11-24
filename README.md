@@ -29,7 +29,7 @@ Os limites dos filtros ficam no topo de `scripts/screen.mjs` (`CRITERIA`).
 - **Dados:** o robô **Atualizar cotações Brasil** lê todo dia útil, após o fechamento da B3, a tabela pública do [Fundamentus](https://www.fundamentus.com.br) (preço, P/L, ROE, ROIC, margem, dívida, dividend yield). Não precisa de chave. Para preço do momento no botão "Atualizar agora", salve no ⚙ uma chave grátis da [brapi.dev](https://brapi.dev).
 - **Régua de preço:** desconto de 15% ao ano em reais (acima da Selic), 4,5% de crescimento na perpetuidade e margem de segurança de 25%. Por isso o P/L "justo" no Brasil é mais ou menos a metade do americano.
 - **Filtros adaptados:** sem estatais (incentivos desalinhados, como alertava Munger) e sem commodities, construção, energia e saneamento. Bancos entram só na lista curada (Itaú, BTG), com ROIC, margem e dívida marcados como "não se aplica".
-- **Screener mensal (dia 2):** **Buscar novas candidatas Brasil** filtra as ações líquidas da B3 (ROE ≥ 20%, ROIC ≥ 15%, margem ≥ 10%, dívida bruta/PL ≤ 1, receita +5% em 5 anos) e guarda 1 ponto por mês de P/L, ROE e ROIC em `data/br-history.json`. Com 12 meses, o "P/L vs histórico" passa a funcionar.
+- **Screener mensal (dia 2):** **Buscar novas candidatas Brasil** filtra as ações líquidas da B3 (ROE ≥ 20%, ROIC ≥ 15%, margem ≥ 10%, dívida líquida/PL ≤ 1, receita +5% em 5 anos) e guarda 1 ponto por mês de P/L, ROE e ROIC em `data/br-history.json`. Com 12 meses, o "P/L vs histórico" passa a funcionar.
 - **Aprovar:** o mesmo workflow **Aprovar candidata** serve para os dois mercados (ex.: `WEGE3` ou `ODFL`).
 
 ## Configuração (uma vez só)

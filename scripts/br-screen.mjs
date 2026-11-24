@@ -11,7 +11,7 @@ const CRITERIA = {
   minRoe: 20,            // ROE atual, % (mais alto que nos EUA: o custo de capital no Brasil é maior)
   minRoic: 15,           // ROIC atual, %
   minNetMargin: 10,      // margem líquida, %
-  maxDebtEquity: 1.0,    // dívida bruta / patrimônio
+  maxDebtEquity: 1.0,    // dívida líquida / patrimônio (negativo = caixa líquido)
   minRevGrowth5: 5,      // crescimento da receita em 5 anos, % (nominal)
   maxPe: 60,
   // controle estatal: Munger insistia em incentivos alinhados
