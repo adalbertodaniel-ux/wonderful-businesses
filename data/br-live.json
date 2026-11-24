@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T15:13:09.883Z",
+  "updatedAt": "2026-11-24T15:17:00.533Z",
   "source": "Fundamentus",
   "quotes": {
     "WEGE3": {
@@ -11,8 +11,8 @@
       "roic": 23.45,
       "netMargin": 16.43,
       "divYield": 4.01,
-      "de": 19956800000,
-      "revGrowth5": 10.25
+      "de": -0.13,
+      "revGrowth5": null
     },
     "ITUB4": {
       "price": 39.73,
@@ -23,8 +23,8 @@
       "roic": 0,
       "netMargin": 0,
       "divYield": 7.84,
-      "de": 218927000000,
-      "revGrowth5": 3.59
+      "de": 0,
+      "revGrowth5": null
     },
     "BPAC11": {
       "price": 49.76,
@@ -35,8 +35,8 @@
       "roic": 0,
       "netMargin": 0,
       "divYield": 2.84,
-      "de": 81659300000,
-      "revGrowth5": 4.4
+      "de": 0,
+      "revGrowth5": null
     },
     "B3SA3": {
       "price": 14.16,
@@ -47,8 +47,8 @@
       "roic": 22.5,
       "netMargin": 46.4,
       "divYield": 6.49,
-      "de": 18880200000,
-      "revGrowth5": 4.58
+      "de": -0.15,
+      "revGrowth5": null
     },
     "TOTS3": {
       "price": 31.08,
@@ -59,8 +59,8 @@
       "roic": 24.42,
       "netMargin": 20.89,
       "divYield": 2.26,
-      "de": 5312710000,
-      "revGrowth5": 16.32
+      "de": 0.62,
+      "revGrowth5": null
     },
     "RADL3": {
       "price": 14.69,
@@ -71,8 +71,8 @@
       "roic": 16.47,
       "netMargin": 2.84,
       "divYield": 3.07,
-      "de": 7551490000,
-      "revGrowth5": 13.05
+      "de": 0.38,
+      "revGrowth5": null
     },
     "ABEV3": {
       "price": 15.94,
@@ -83,8 +83,8 @@
       "roic": 20.74,
       "netMargin": 18.26,
       "divYield": 5.4,
-      "de": 90895700000,
-      "revGrowth5": 3.37
+      "de": -0.21,
+      "revGrowth5": null
     },
     "PSSA3": {
       "price": 42.91,
@@ -95,8 +95,8 @@
       "roic": 78.82,
       "netMargin": 8.57,
       "divYield": 6.99,
-      "de": 16710500000,
-      "revGrowth5": 13.02
+      "de": -0.97,
+      "revGrowth5": null
     },
     "VIVA3": {
       "price": 15.85,
@@ -107,8 +107,8 @@
       "roic": 15.47,
       "netMargin": 16.21,
       "divYield": 4.4,
-      "de": 3287220000,
-      "revGrowth5": 15.12
+      "de": 0.03,
+      "revGrowth5": null
     },
     "LREN3": {
       "price": 9.21,
@@ -119,8 +119,8 @@
       "roic": 23.79,
       "netMargin": 9.17,
       "divYield": 9.99,
-      "de": 10212900000,
-      "revGrowth5": 5.54
+      "de": -0.11,
+      "revGrowth5": null
     },
     "GRND3": {
       "price": 3.65,
@@ -131,8 +131,8 @@
       "roic": 7.87,
       "netMargin": 22.21,
       "divYield": 40.47,
-      "de": 3291380000,
-      "revGrowth5": 1.14
+      "de": -0.03,
+      "revGrowth5": null
     },
     "LEVE3": {
       "price": 30.57,
@@ -143,8 +143,8 @@
       "roic": 34.46,
       "netMargin": 12.53,
       "divYield": 9.84,
-      "de": 1113500000,
-      "revGrowth5": 7.72
+      "de": 0.79,
+      "revGrowth5": null
     }
   }
 }
