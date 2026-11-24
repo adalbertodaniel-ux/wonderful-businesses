@@ -9,7 +9,10 @@ async function get(url) {
   return Buffer.from(await r.arrayBuffer()).toString('latin1');
 }
 
-const strip = (s) => s.replace(/<[^>]+>/g, '').replace(/&nbsp;|&#160;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+// O Fundamentus escreve acentos como entidades HTML (&iacute;, &ccedil;...): decodifica antes de comparar textos
+const ENT = { nbsp: ' ', amp: '&', aacute: 'á', eacute: 'é', iacute: 'í', oacute: 'ó', uacute: 'ú', atilde: 'ã', otilde: 'õ', ccedil: 'ç', acirc: 'â', ecirc: 'ê', ocirc: 'ô', agrave: 'à', Aacute: 'Á', Eacute: 'É', Iacute: 'Í', Oacute: 'Ó', Uacute: 'Ú', Atilde: 'Ã', Ccedil: 'Ç' };
+const decode = (s) => s.replace(/&#(\d+);/g, (_, n) => String.fromCharCode(+n)).replace(/&([a-zA-Z]+);/g, (m, k) => ENT[k] ?? m);
+const strip = (s) => decode(s.replace(/<[^>]+>/g, '')).replace(/\s+/g, ' ').trim();
 
 export function num(s) {
   if (s == null) return null;
@@ -36,6 +39,8 @@ export async function resultado() {
     const i = ths.findIndex((h) => re.test(h));
     idx[k] = i >= 0 ? i : FALLBACK[k];
   }
+  const missing = ['pl', 'roe', 'roic', 'mrgLiq', 'divBrutPat', 'liq2m'].filter((k) => !ths.some((h) => HEADERS[k].test(h)));
+  if (missing.length) console.warn(`Aviso: colunas não reconhecidas pelo nome (${missing.join(', ')}); usando a posição. Cabeçalhos: ${ths.join(' | ')}`);
   const out = {};
   for (const tr of table.match(/<tr[\s\S]*?<\/tr>/gi) || []) {
     const c = [...tr.matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map((m) => strip(m[1]));
