@@ -1,5 +1,7 @@
 # Wonderful Businesses at Fair Prices
 
+Duas abas: **🇺🇸 EUA** e **🇧🇷 Brasil**, com a mesma filosofia e réguas de preço próprias para cada mercado.
+
 Dashboard de ações americanas filtradas pelos critérios de *O Tao de Warren Buffett* e *O Tao de Charlie Munger*, ordenadas do preço mais justo ao menos justo.
 
 Para cada empresa o painel mostra: preço ao vivo, valor intrínseco (owner earnings × DCF de 2 estágios), preço-teto com margem de segurança de 25%, P/L contra a média histórica da própria empresa, ROE, ROIC, margem líquida, dívida/PL, dividend yield, idade da empresa, moat e pontos de atenção.
@@ -22,6 +24,14 @@ A lista principal é curada (o moat é julgado por uma pessoa). Para encontrar n
 
 Os limites dos filtros ficam no topo de `scripts/screen.mjs` (`CRITERIA`).
 
+## Aba Brasil
+
+- **Dados:** o robô **Atualizar cotações Brasil** lê todo dia útil, após o fechamento da B3, a tabela pública do [Fundamentus](https://www.fundamentus.com.br) (preço, P/L, ROE, ROIC, margem, dívida, dividend yield). Não precisa de chave. Para preço do momento no botão "Atualizar agora", salve no ⚙ uma chave grátis da [brapi.dev](https://brapi.dev).
+- **Régua de preço:** desconto de 15% ao ano em reais (acima da Selic), 4,5% de crescimento na perpetuidade e margem de segurança de 25%. Por isso o P/L "justo" no Brasil é mais ou menos a metade do americano.
+- **Filtros adaptados:** sem estatais (incentivos desalinhados, como alertava Munger) e sem commodities, construção, energia e saneamento. Bancos entram só na lista curada (Itaú, BTG), com ROIC, margem e dívida marcados como "não se aplica".
+- **Screener mensal (dia 2):** **Buscar novas candidatas Brasil** filtra as ações líquidas da B3 (ROE ≥ 20%, ROIC ≥ 15%, margem ≥ 10%, dívida bruta/PL ≤ 1, receita +5% em 5 anos) e guarda 1 ponto por mês de P/L, ROE e ROIC em `data/br-history.json`. Com 12 meses, o "P/L vs histórico" passa a funcionar.
+- **Aprovar:** o mesmo workflow **Aprovar candidata** serve para os dois mercados (ex.: `WEGE3` ou `ODFL`).
+
 ## Configuração (uma vez só)
 
 1. **Chave grátis da Finnhub:** crie em https://finnhub.io/register e copie a API key.
@@ -39,7 +49,9 @@ Os limites dos filtros ficam no topo de `scripts/screen.mjs` (`CRITERIA`).
 | `data/candidates.json` | Empresas que passaram no screener mensal, gerado pelo Actions |
 | `scripts/update.mjs` | Script que busca os dados na Finnhub |
 | `scripts/screen.mjs` | Screener mensal (S&P 500 + S&P 400) |
-| `scripts/approve.mjs` | Move uma candidata para a lista principal |
+| `scripts/approve.mjs` | Move uma candidata para a lista principal (EUA ou Brasil) |
+| `data/br-stocks.json`, `data/br-live.json`, `data/br-candidates.json` | Equivalentes brasileiros |
+| `scripts/fundamentus.mjs`, `scripts/br-update.mjs`, `scripts/br-screen.mjs` | Leitura do Fundamentus, atualização diária e screener mensal do Brasil |
 | `.github/workflows/update.yml` | Atualização diária de preços |
 | `.github/workflows/screen.yml` | Screener mensal |
 | `.github/workflows/approve.yml` | Botão de aprovação de candidata |

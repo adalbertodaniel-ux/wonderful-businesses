@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       tickers:
-        description: 'Ticker(s) para mover para a lista principal (ex.: ODFL ou ODFL, FICO)'
+        description: 'Ticker(s) para mover para a lista principal, EUA ou Brasil (ex.: ODFL ou ODFL, WEGE3)'
         required: true
 
 permissions:
@@ -30,7 +30,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/stocks.json data/candidates.json
+          git add data/stocks.json data/candidates.json data/br-stocks.json data/br-candidates.json
           git diff --staged --quiet || git commit -m "Aprova candidata(s): $TICKERS"
           git pull --rebase
           git push

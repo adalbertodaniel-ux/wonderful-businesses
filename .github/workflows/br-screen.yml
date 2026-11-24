@@ -1,0 +1,33 @@
+name: Buscar novas candidatas Brasil
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '29 12 2 * *' # todo dia 2 do mês, ~9h29 de Brasília
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-commits
+  cancel-in-progress: false
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Varrer a B3 no Fundamentus (~2 min)
+        run: node scripts/br-screen.mjs
+      - name: Salvar no repositório
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/br-candidates.json data/br-history.json
+          git diff --staged --quiet || git commit -m "Atualiza candidatas Brasil $(date -u +%Y-%m-%d)"
+          git pull --rebase
+          git push
